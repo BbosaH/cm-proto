@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+package proto;
+option java_package ="com.clinicmaster.ccdp.proto";
+option java_outer_classname = "CddpProtocol";
+
+
+
+message ClientRequest{
+    enum RequestType{
+
+        AUTHENTICATE =0;
+        VISIT_PUT =1 ;
+        FACILITY_GET =2;
+        CDDP_POINT_GET=3;
+
+    }
+    RequestType request =1;
+    string username =2;
+    string password =3;
+}
+
+message ServerResponse{
+    enum STATUS {
+        SUCCESS =0;
+        FAILURE =1;
+        DUPLICATE =2;
+    }
+
+    STATUS status =1;
+    repeated MsgFacility facilities = 5;
+    repeated MsgCddpPoint cddp_points = 6;
+
+}
+
+message MsgVisit{
+
+    string id =1;
+    int64 visit_date = 3;
+    string peer_leader=15;
+    string client_number =4;
+    string tb_has_cough =5;
+    string tb_has_fever =6;
+    string tb_has_noticeable_weight =7;
+    string tb_has_excessive_night_sweat=8;
+    string patient_any_complaints_tofay =9;
+    string patient_got_sick_after_last_visit=10;
+    string patient_did_you_get_treatment =11;
+    string patient_where_did_you_get_treatment=12;
+    int64 female_last_date_of_periods =13;
+    string female_family_planning_method_used= 14;
+    repeated MsgDrug consumptions = 2;
+    MsgAppointment appointment =16;
+
+
+}
+
+message MsgDrug {
+
+    string id=1;
+    string drug_name=2;
+    string drug_code=3;
+    int64 last_visit_pills=4;
+    int64 pills_remaining=5;
+    int64 pills_taken =6;
+    int64 pills_dispensed=7;
+
+}
+
+message MsgCddpPoint {
+    string id =1;
+    string name =2;
+    string locaton=3;
+    MsgFacility facility =4;
+}
+
+message MsgFacility {
+    string id=1;
+    string name =2;
+    string location=3;
+}
+
+message MsgAppointment {
+    string id =1;
+    int64 appointment_date =6;
+}
+
+message User {
+    string id=1;
+    string first_name=2;
+    string last_name =3;
+    string user_name=4;
+    string password=5;
+
+}
